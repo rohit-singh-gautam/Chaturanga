@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="rohit::PieceList">
+    <DisplayString>List of {Mohra = {getPiece().mohra}, Player = {getPiece().player}}</DisplayString>
+    <Expand>
+      <LinkedListItems>
+        <HeadPointer>active</HeadPointer>
+        <NextPointer>next</NextPointer>
+        <ValueNode>position</ValueNode>
+      </LinkedListItems>
+    </Expand>
+  </Type>
+  
+  <Type Name="rohit::Position">
+    <DisplayString>{{{(int)row} {(int)col}}}</DisplayString>
+  </Type>
+
+  <Type Name="rohit::mohra_t">
+    <DisplayString>{displayString[value]}</DisplayString>
+  </Type>
+
+  <Type Name="rohit::player_t">
+    <DisplayString>{displayString[value]}</DisplayString>
+  </Type>
+
+  <Type Name="rohit::PieceEntry">
+    <DisplayString>{{{displayString[value]},{position}}}</DisplayString>
+  </Type>
+  
+  <Type Name="rohit::piece_t">
+    <DisplayString>{displayString[value]}</DisplayString>
+  </Type>
+  
+  <Type Name="rohit::PadatiPromotion">
+    <DisplayString>{{{rohit::player_t::displayString[player]} col={col}}}</DisplayString>
+  </Type>
+  
+  <Type Name="rohit::PieceCompressed">
+    <DisplayString>{{{mohra_t::displayString[mohra]},{player_t::displayString[player]},{moreCount+1}}}</DisplayString>
+  </Type>
+</AutoVisualizer>
