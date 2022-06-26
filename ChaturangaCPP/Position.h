@@ -8,7 +8,7 @@ namespace rohit {
 		row_unknown = -8,
 		row_rend = -1,
 		row_start = 0,
-		row_rstart = 7, row_last = 7, row_max = 8
+		row_rstart = 7, row_last = 7
 	};
 
 	constexpr size_t row_max = 8;
@@ -16,7 +16,7 @@ namespace rohit {
 	enum class col_t : col_storage_type {
 		col_unknown = -8,
 		col_start = 0,
-		col_last = 7, col_max = 8
+		col_last = 7
 	};
 
 	constexpr size_t col_max = 8;
@@ -60,8 +60,8 @@ namespace rohit {
 	private:
 		union {
 			struct {
-				row_t row;
-				col_t col;
+				row_t row : 4;
+				col_t col : 4;
 			};
 			position_storage_type value;
 		};
