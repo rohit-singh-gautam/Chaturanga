@@ -18,8 +18,8 @@ namespace rohit {
 
 	class NitiAyog : public Niti
 	{
-		static const niti_depth_type max_depth = 9;
-		static const int max_moves = 400;
+		static constexpr niti_depth_type max_depth = 9;
+		static constexpr int max_moves = 400;
 		const niti_depth_type depth;
 		MohraChal::StoreType movesList[max_depth];
 		Evaluator &evaluator;

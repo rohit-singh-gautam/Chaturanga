@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "pieces.h"
 #include <iostream>
 

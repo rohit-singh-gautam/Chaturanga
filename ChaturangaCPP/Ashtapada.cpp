@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "Ashtapada.h"
+﻿#include "Ashtapada.h"
 #include <cstddef>
 
 namespace rohit {

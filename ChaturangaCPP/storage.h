@@ -1,7 +1,8 @@
 #pragma once
 #include <climits>
+#include <cstdint>
 
-typedef char position_storage_type;
+typedef uint16_t position_storage_type;
 typedef char row_storage_type;
 typedef char col_storage_type;
 typedef char player_storate_type;

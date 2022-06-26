@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Chal.h"
 
 namespace rohit {

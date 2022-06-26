@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "Evaluator.h"
+﻿#include "Evaluator.h"
 #include <random>
 
 namespace rohit {

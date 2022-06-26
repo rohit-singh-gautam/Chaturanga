@@ -1,7 +1,6 @@
 ﻿// Chaturanga.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "pch.h"
 #include <iostream>
 
 #include "Ashtapada.h"
@@ -10,6 +9,7 @@
 #include <chrono>
 #include <thread>
 #include <algorithm>
+#include <vector>
 
 using namespace rohit;
 

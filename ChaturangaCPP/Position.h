@@ -60,8 +60,8 @@ namespace rohit {
 	private:
 		union {
 			struct {
-				row_t row : 4;
-				col_t col : 4;
+				row_t row;
+				col_t col;
 			};
 			position_storage_type value;
 		};
