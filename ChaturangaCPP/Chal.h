@@ -60,8 +60,8 @@ namespace rohit {
 			selfPromotion(PadatiPromotion::findSelfPadatiPromotion(to, atFrom, pieces)),
 			opponentPromotion(PadatiPromotion::findOpponentPadatiPromotion(capturedList, pieces)), previousCheck(pieces.isChecked()) {
 #if DEBUG_RAJA_CAPTURE == 1
-			if (captured.getMohra() == mohra_t::Raja) {
-				throw std::exception("Raja cannot be captured");
+			if (capturedList.getMohra() == mohra_t::Raja) {
+				throw std::runtime_error("Raja cannot be captured");
 			}
 #endif
 		}

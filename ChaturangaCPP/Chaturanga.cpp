@@ -10,6 +10,7 @@
 #include <thread>
 #include <algorithm>
 #include <vector>
+#include <memory>
 
 using namespace rohit;
 
@@ -65,33 +66,31 @@ std::string board[] = {
 
 void TestAshtapada() {
 	const int maxdepth = 9;
-	const int depth[] = { 6, 4 };
+	const int depth[] = { 3, 3 };
 	std::vector<Chal> moves;
 
 	std::cout.imbue(std::locale(""));
 
-	Ashtapada* pAshtapada = new Ashtapada();
-	Ashtapada &ashtapada = *pAshtapada;
-	//ashtapada.apply(board[1], player_t::first);
-	ashtapada.apply(Ashtapada::DEFAULT, player_t::first);
-	Evaluator evaluator(ashtapada);
+	auto pAshtapada { std::make_unique<Ashtapada>() };
+	//pAshtapada->apply(board[1], player_t::first);
+	pAshtapada->apply(Ashtapada::DEFAULT, player_t::first);
+	Evaluator evaluator(*pAshtapada);
 	evaluator.refresh();
-	NitiAyog nitiAyog(ashtapada, evaluator, maxdepth);
+	NitiAyog nitiAyog(*pAshtapada, evaluator, maxdepth);
 
-	ashtapada.display_flag = ashtapada.display_board | ashtapada.display_captured | ashtapada.display_summary;
-	std::cout << ashtapada << std::endl;
+	pAshtapada->display_flag = Ashtapada::display_board | Ashtapada::display_captured | Ashtapada::display_summary;
+	std::cout << *pAshtapada << std::endl;
 
-	while (ashtapada.isCheckmate() == player_t::none && ashtapada.getMoveCount() < Ashtapada::max_chal - maxdepth) {
-		int playerid = ashtapada.getCurrentPlayer();
+	while (pAshtapada->isCheckmate() == player_t::none && pAshtapada->getMoveCount() < Ashtapada::max_chal - maxdepth) {
+		int playerid = pAshtapada->getCurrentPlayer();
 		const Chal chal = nitiAyog.getNextMove(depth[playerid]);
-		bool moved = ashtapada.applyChal(chal.from, chal.to);
+		bool moved = pAshtapada->applyChal(chal.from, chal.to);
 		assert(moved);
-		std::cout << ashtapada;
+		std::cout << *pAshtapada;
 		std::cout << "stat:: " << nitiAyog.getStat() << std::endl;
 		std::cout << "-------------------------------" << std::endl << std::endl;
 	}
-	std::cout << "Checkmate: " << ashtapada.isCheckmate().to_string() << " player" << std::endl;
-	delete pAshtapada;
+	std::cout << "Checkmate: " << pAshtapada->isCheckmate().to_string() << " player" << std::endl;
 }
 
 int main()

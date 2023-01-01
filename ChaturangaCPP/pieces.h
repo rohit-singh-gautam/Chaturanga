@@ -300,32 +300,32 @@ namespace rohit {
 		inline _Entry *getEntry(const Position pos) { 
 			auto index = pos.getIndex();
 #if DEBUG_PIECES_INDEX == 1
-			if (index >= block_count) throw new std::exception("index beyond range");
+			if (index >= block_count) throw std::runtime_error("index beyond range");
 #endif
 			return blocks[index];
 		}
 		inline const _Entry *getEntry(const Position pos) const {
 			auto index = pos.getIndex();
 #if DEBUG_PIECES_INDEX == 1
-			if (index >= block_count) throw new std::exception("index beyond range");
+			if (index >= block_count) throw std::runtime_error("index beyond range");
 #endif
 			return blocks[index];
 		}
 		inline void setEntry(const Position pos, _Entry *entry) {
 			auto index = pos.getIndex();
 #if DEBUG_PIECES_INDEX == 1
-			if (index >= block_count) throw new std::exception("index beyond range");
+			if (index >= block_count) throw std::runtime_error("index beyond range");
 			if (entry != nullptr && (entry < pieceEntryAllocation || entry > pieceEntryAllocation + piece_count - 1)) {
 				if (entry < pieceEntryAllocation) {
 					std::cout << "Underflow" << std::endl;
-					throw new std::exception("wrong entry under flow");
+					throw std::runtime_error("wrong entry under flow");
 				}
 				if (entry < pieceEntryAllocation + piece_count) {
 					std::cout << "Overflow" << std::endl;
-					throw new std::exception("wrong entry overflow flow");
+					throw std::runtime_error("wrong entry overflow flow");
 				}
 				std::cout << "Must not reach here" << std::endl;
-				throw new std::exception("wrong entry calculation error");
+				throw std::runtime_error("wrong entry calculation error");
 			}
 #endif
 			blocks[index] = entry;
@@ -334,7 +334,7 @@ namespace rohit {
 		inline PieceList &getMap(const piece_t piece) {
 #if DEBUG_PIECEMAP_INDEX == 1
 			if (piece >= piece_t::end) {
-				throw new std::exception("Piece range exceeeds limit.");
+				throw std::runtime_error("Piece range exceeeds limit.");
 			}
 #endif
 			return pieceMap[piece]; 
@@ -342,7 +342,7 @@ namespace rohit {
 		inline const PieceList &getMap(const piece_t piece) const {
 #if DEBUG_PIECEMAP_INDEX == 1
 			if (piece >= piece_t::end) {
-				throw new std::exception("Piece range exceeeds limit.");
+				throw std::runtime_error("Piece range exceeeds limit.");
 			}
 #endif
 			return pieceMap[piece];

@@ -187,7 +187,7 @@ namespace rohit {
 				bool isAttackedVerify = chalFactory.isAttacked(pos);
 				if (isAttacked != isAttackedVerify) {
 					std::string str = "Bad Raja attack calculation, total attacked: " + chalFactory.stringWhoAttacked(pos);
-					throw new std::exception(str.c_str());
+					throw std::runtime_error(str.c_str());
 				}
 #endif
 			}
@@ -198,7 +198,7 @@ namespace rohit {
 #if DEBUG_RAJA_CAPTURE_VERIFY == 1
 			bool isAttackedVerify = chalFactory.isAttacked(pos);
 			if (isAttacked != isAttackedVerify) {
-				throw new std::exception("Bad Raja attack calculation 2");
+				throw std::runtime_error("Bad Raja attack calculation 2");
 			}
 #endif
 		}

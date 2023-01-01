@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+set(COMPILE_WARNING_AS_ERROR true)
+# add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-vla)
+
 project(chaturanga)
 
 add_executable(chaturanga
@@ -8,5 +13,4 @@ add_executable(chaturanga
 	Chal.h       LRU.h        NitiAyog.h    ReleaseCheck.h  storage.h
 )
 
-set_property(TARGET chaturanga PROPERTY CXX_STANDARD 20)
 

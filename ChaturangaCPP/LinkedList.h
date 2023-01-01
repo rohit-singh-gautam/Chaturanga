@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>
+#include <memory>
 
 namespace rohit {
 	template<class _Value> struct fixed_list_entry {
@@ -114,17 +115,14 @@ namespace rohit {
 
 	private:
 		size_t capacity;
-		_Entry *store;
+		std::unique_ptr<_Entry[]> store;
 		size_t store_count;
 		_Entry first;
 
 	public:
-		inline fixed_list(size_t capacity) : capacity(capacity), store_count(0) {
+		inline fixed_list(size_t capacity) : capacity{capacity}, store{std::make_unique<_Entry[]>(capacity)}, store_count{0} {
 			first.next = first.prev = &first;
-			store = new _Entry[capacity];
 		}
-
-		inline ~fixed_list() { delete[] store; }
 
 		// State
 		inline bool isFull() { return capacity == store_count; }
