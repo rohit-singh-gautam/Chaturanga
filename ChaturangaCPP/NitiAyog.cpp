@@ -1,6 +1,7 @@
 #include "NitiAyog.h"
 #include <algorithm>
 #include <random>
+#include <vector>
 
 namespace rohit {
 
