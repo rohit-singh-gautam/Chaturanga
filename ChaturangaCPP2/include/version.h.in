@@ -1,0 +1,4 @@
+#pragma once
+
+#define VERSION_MAJOR @chaturanga_VERSION_MAJOR@
+#define VERSION_MINOR @chaturanga_VERSION_MINOR@
