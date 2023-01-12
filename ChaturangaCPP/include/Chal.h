@@ -6,32 +6,32 @@
 namespace rohit {
 
 	class PadatiPromotion {
+		struct entry_type{
+			promotion_compressed player : 4;
+			promotion_compressed col : 4;
+		};
 		union {
-			struct {
-				promotion_compressed player : 4;
-				promotion_compressed col : 4;
-
-			};
+			entry_type entry;
 			promotion_compressed value;
 		};
 
 	public:
 		static const PadatiPromotion findSelfPadatiPromotion(const Position to, const piece_t atFrom, const Pieces & pieces);
 		static const PadatiPromotion findOpponentPadatiPromotion(const piece_t capturedList, const Pieces & pieces);
-		inline static const row_t getLastRow(const player_t player) { return player == player_t::first ? 7_row : 0_row; }
-		inline static const mohra_t getPromotedMohra(const col_t col) { return Pieces::getInitialColMohra(col); }
+		inline static row_t getLastRow(const player_t player) { return player == player_t::first ? 7_row : 0_row; }
+		inline static mohra_t getPromotedMohra(const col_t col) { return Pieces::getInitialColMohra(col); }
 
 		static const PadatiPromotion None;
 
-		inline PadatiPromotion(const player_t player, const col_t col) : player(player), col(static_cast<promotion_compressed>(col)) { }
+		inline PadatiPromotion(const player_t player, const col_t col) : entry{static_cast<promotion_compressed>(player), static_cast<promotion_compressed>(col)} { }
 
-		inline const col_t getCol() const { return static_cast<col_t>(col); }
-		inline const player_t getPlayer() const { return player;  }
-		inline const row_t getLastRow() const { return getLastRow(getPlayer()); }
+		inline col_t getCol() const { return static_cast<col_t>(entry.col); }
+		inline player_t getPlayer() const { return entry.player;  }
+		inline row_t getLastRow() const { return getLastRow(getPlayer()); }
 		inline const Position getPosition() const { return { getLastRow(),  getCol() }; }
-		inline const mohra_t getPromotedMohra() const { return Pieces::getInitialColMohra(getCol()); }
-		inline const piece_t getPromotedPiece() const { return { getPromotedMohra(), getPlayer() }; }
-		inline const piece_t getRemovedPadati() const { return { mohra_t::Padati, getPlayer() }; }
+		inline mohra_t getPromotedMohra() const { return Pieces::getInitialColMohra(getCol()); }
+		inline piece_t getPromotedPiece() const { return { getPromotedMohra(), getPlayer() }; }
+		inline piece_t getRemovedPadati() const { return { mohra_t::Padati, getPlayer() }; }
 
 		inline bool operator==(const PadatiPromotion &rhs) const { return value == rhs.value; }
 		inline bool operator!=(const PadatiPromotion &rhs) const { return value != rhs.value; }
@@ -81,7 +81,7 @@ namespace rohit {
 	protected:
 		const Pieces &pieces;
 		bool addValidEmptyCapture(const Position oldPos, const DiffPosition diffPos, StoreType &moves, const player_t player) const;
-		bool addValidEmpty(const Position oldPos, const DiffPosition diffPos, StoreType &moves, const player_t player) const;
+		bool addValidEmpty(const Position oldPos, const DiffPosition diffPos, StoreType &moves) const;
 		bool addValidCapture(const Position oldPos, const DiffPosition diffPos, StoreType &moves, const player_t player) const;
 
 		static const Position unsafeCenter;

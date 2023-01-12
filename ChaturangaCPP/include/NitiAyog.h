@@ -11,7 +11,7 @@ namespace rohit {
 		std::chrono::duration<double> elapsedTimeMax;
 		size_t boardEvaluated;
 		size_t boardEvaluatedMax;
-		NitiAyogStat() : boardEvaluated(0), boardEvaluatedMax(0), elapsedTime(), elapsedTimeMax() {}
+		NitiAyogStat() : elapsedTime(), elapsedTimeMax(), boardEvaluated(0), boardEvaluatedMax(0) {}
 	};
 
 	std::ostream & operator<<(std::ostream & os, const NitiAyogStat &nitiAyogStat);
@@ -20,9 +20,10 @@ namespace rohit {
 	{
 		static constexpr niti_depth_type max_depth = 9;
 		static constexpr int max_moves = 400;
-		const niti_depth_type depth;
-		MohraChal::StoreType movesList[max_depth];
+		
+		MohraChal::StoreType movesList[max_depth] { };
 		Evaluator &evaluator;
+		const niti_depth_type depth;
 
 		NitiAyogStat stat;
 	public:
@@ -42,7 +43,7 @@ namespace rohit {
 		size_t boardEvaluatedMax;
 		size_t skipped;
 		size_t skippedMax;
-		NitiAyogStatLRU() : boardEvaluated(0), boardEvaluatedMax(0), elapsedTime(), elapsedTimeMax(), skipped(0), skippedMax(0) {}
+		NitiAyogStatLRU() : elapsedTime(), elapsedTimeMax(), boardEvaluated(0), boardEvaluatedMax(0), skipped(0), skippedMax(0) {}
 	};
 
 	std::ostream & operator<<(std::ostream & os, const NitiAyogStatLRU &nitiAyogStat);
@@ -57,9 +58,10 @@ namespace rohit {
 		static const niti_depth_type max_depth = 9;
 		static const size_t lru_capacity = 40000000;
 		static const int max_moves = 400;
-		const niti_depth_type depth;
-		MohraChal::StoreType movesList[max_depth];
+		
+		MohraChal::StoreType movesList[max_depth] { };
 		Evaluator &evaluator;
+		const niti_depth_type depth;
 		rohit::lru_map<board_hash_type, niti_lru_entry> map;
 
 		NitiAyogStatLRU stat;

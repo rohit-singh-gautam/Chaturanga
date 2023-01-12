@@ -206,6 +206,12 @@ namespace rohit {
 		inline const_iterator begin() const { return { first.next }; }
 		inline const_iterator end() const { return { &first }; }
 		inline const_iterator last() const { return { first.prev }; }
+		
+		inline size_t size() const {
+			size_t count { 0 };
+			for(auto itr { begin() }; itr != end(); ++itr, ++count);
+			return count;
+		}
 
 		inline void to_begin(iterator iter) { if (iter != begin()) iter.move(begin()); }
 	};

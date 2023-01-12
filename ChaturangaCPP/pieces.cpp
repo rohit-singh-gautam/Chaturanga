@@ -11,10 +11,6 @@ namespace rohit {
 		"Invalid"
 	};
 
-	const int player_t::signArray[] = { -1, 1, 0, 0, 0 };
-
-
-	const char mohra_t::CHAR[] = { 'R', 'S', 'C', 'G', 'A', 'P', '\0' };
 	const std::string mohra_t::displayString[]{
 		"Raja",
 		"Senapati",
@@ -86,18 +82,6 @@ namespace rohit {
 		os << "Active: " << pieceList.activeList << "; Captured: " << pieceList.capturedList;
 		return os;
 	}
-
-	const mohra_t Pieces::initialColMohra[] = //Used only for padati promotion
-	{ mohra_t::Ratha, mohra_t::Ashva, mohra_t::Gaja, mohra_t::Senapati, mohra_t::Senapati, mohra_t::Gaja, mohra_t::Ashva, mohra_t::Ratha };
-
-	const col_t Pieces::initialCol[mohra_t::max][2] = {
-		{ 4_col, col_t::col_unknown },				// Raja
-		{ 3_col, 4_col },							// Senapati, marking both the center
-		{ 0_col, 7_col },							// Ratha
-		{ 2_col, 5_col },							// Gaja
-		{ 1_col, 6_col },							// Ashva
-		{ col_t::col_unknown, col_t::col_unknown },	// Padati
-	};
 
 	const int Pieces::MaxPossibleMohra[piece_t::max] = { 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 8, 8 };
 

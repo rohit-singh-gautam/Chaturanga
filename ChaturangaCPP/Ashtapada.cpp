@@ -216,7 +216,7 @@ namespace rohit {
 
 	int Ashtapada::validateChalWithIndex(const Position from, const Position to)
 	{
-		for (int index = 0; index < validMoves.size(); index++) {
+		for (decltype(validMoves.size()) index { 0 }; index < validMoves.size(); index++) {
 			const Chal &chal = validMoves[index];
 			if (chal.from == from && chal.to == to) {
 				return index;
@@ -348,17 +348,17 @@ namespace rohit {
 			else os << ",";
 			os << "Moves:" << ashtapada.getMoveCount() << "; ";
 			for (player_t player = player_t::begin; player != player_t::end; player++) {
-				int activeCount = 0;
-				int capturedCount = 0;
+				size_t activeCount = 0;
+				size_t capturedCount = 0;
 				for (mohra_t mohraIndex = mohra_t::begin; mohraIndex != mohra_t::end; mohraIndex++) {
 					const piece_t piece(mohraIndex, player);
 					const Pieces::list &capturedList = ashtapada.getCaptured(piece);
-					for (const PieceEntry &entry : capturedList) ++capturedCount;
+					capturedCount += capturedList.size();
 
 					const Pieces::list &activeList = ashtapada.getActive(piece);
-					for (const PieceEntry &entry : activeList) ++activeCount;
+					activeCount += activeList.size();
 				}
-				assert(activeCount == ashtapada.activeCount[player]);
+				assert(activeCount == static_cast<size_t>(ashtapada.activeCount[player]));
 				os << player << "{Active:" << activeCount << ",Captured:" << capturedCount << "} ";
 			}
 			os << std::endl;

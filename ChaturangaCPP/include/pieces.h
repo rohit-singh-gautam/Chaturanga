@@ -5,8 +5,6 @@
 #include <cassert>
 #include <string>
 
-#pragma warning(push)
-#pragma warning(disable : 26812)
 namespace rohit {
 
 	class player_t {
@@ -24,29 +22,31 @@ namespace rohit {
 	private:
 		player_storate_type value;
 		static const std::string displayString[];
-		static const int signArray[];
+		static constexpr int signArray[] { -1, 1, 0, 0, 0 };
 
-		inline size_t getIndex() const { return static_cast<size_t>(value); }
+		constexpr size_t getIndex() const { return static_cast<size_t>(value); }
 
 	public:
-		player_t(unsigned char value) : value(static_cast<player_internal_t>(value)) {}
-		player_t(const player_t &player) : value(player.value) {}
+		constexpr player_t(unsigned char value) : value(static_cast<player_internal_t>(value)) {}
+		constexpr player_t(const player_t &player) : value(player.value) {}
 
-		inline player_t &operator++() { ++value; return *this; }
-		inline player_t operator++(int) { player_t temp = *this; ++*this; return temp; }
-		inline player_t &operator--() { --value; return *this; }
-		inline player_t operator--(int) { player_t temp = *this; --*this; return temp; }
+		constexpr player_t &operator++() { ++value; return *this; }
+		constexpr player_t operator++(int) { player_t temp = *this; ++*this; return temp; }
+		constexpr player_t &operator--() { --value; return *this; }
+		constexpr player_t operator--(int) { player_t temp = *this; --*this; return temp; }
 
-		inline bool operator==(const player_t &rhs) const { return value == rhs.value; }
-		inline bool operator!=(const player_t &rhs) const { return value != rhs.value; }
-		inline bool operator==(const player_internal_t rhs) const { return value == rhs; }
-		inline bool operator!=(const player_internal_t rhs) const { return value != rhs; }
+		constexpr bool operator==(const player_t &rhs) const { return value == rhs.value; }
+		constexpr bool operator!=(const player_t &rhs) const { return value != rhs.value; }
+		constexpr bool operator==(const player_internal_t rhs) const { return value == rhs; }
+		constexpr bool operator!=(const player_internal_t rhs) const { return value != rhs; }
 
-		inline operator player_internal_t() const { return static_cast<player_internal_t>(value); }
+		constexpr player_t& operator=(const player_t& rhs) { value = rhs.value; return *this; }
+
+		constexpr operator player_internal_t() const { return static_cast<player_internal_t>(value); }
 		//inline operator unsigned char() const { return static_cast<unsigned char>(value & 0x01); }
 
 
-		inline player_t opponent() const {
+		constexpr player_t opponent() const {
 			switch (value) {
 			case player_internal_t::first:
 				return player_internal_t::second;
@@ -56,9 +56,9 @@ namespace rohit {
 				return player_internal_t::unknown;
 			}
 		}
-		inline bool verify() const { return value == player_internal_t::first || value == player_internal_t::second; }
+		constexpr bool verify() const { return value == player_internal_t::first || value == player_internal_t::second; }
 
-		inline int getSign() const { return signArray[getIndex()]; }
+		constexpr int getSign() const { return signArray[getIndex()]; }
 		inline std::string to_string() const { return displayString[getIndex()]; }
 
 		friend class piece_t;
@@ -82,31 +82,31 @@ namespace rohit {
 
 	private:
 		mohra_storate_type value;
-		static const char CHAR[];
+		constexpr static char CHAR[] { 'R', 'S', 'C', 'G', 'A', 'P', '\0' };
 		static const std::string displayString[];
 
-		mohra_t(unsigned char value) : value(static_cast<mohra_storate_type>(value)) {}
+		constexpr mohra_t(unsigned char value) : value(static_cast<mohra_storate_type>(value)) {}
 
 	public:
-		mohra_t(const mohra_internal_t value) : value(value) {}
-		mohra_t(const mohra_t &mohra) : value(mohra.value) {}
+		constexpr mohra_t(const mohra_internal_t value) : value(value) {}
+		constexpr mohra_t(const mohra_t &mohra) : value(mohra.value) {}
 
-		inline mohra_t &operator++() { ++value; return *this; }
-		inline mohra_t operator++(int) { mohra_t temp = *this; ++*this; return temp; }
-		inline mohra_t &operator--() { --value; return *this; }
-		inline mohra_t operator--(int) { mohra_t temp = *this; --*this; return temp; }
+		constexpr mohra_t &operator++() { ++value; return *this; }
+		constexpr mohra_t operator++(int) { mohra_t temp = *this; ++*this; return temp; }
+		constexpr mohra_t &operator--() { --value; return *this; }
+		constexpr mohra_t operator--(int) { mohra_t temp = *this; --*this; return temp; }
 
-		inline bool operator==(const mohra_t rhs) const { return value == rhs.value; }
-		inline bool operator!=(const mohra_t rhs) const { return value != rhs.value; }
-		inline bool operator==(const mohra_internal_t rhs) const { return value == rhs; }
-		inline bool operator!=(const mohra_internal_t rhs) const { return value != rhs; }
+		constexpr bool operator==(const mohra_t rhs) const { return value == rhs.value; }
+		constexpr bool operator!=(const mohra_t rhs) const { return value != rhs.value; }
+		constexpr bool operator==(const mohra_internal_t rhs) const { return value == rhs; }
+		constexpr bool operator!=(const mohra_internal_t rhs) const { return value != rhs; }
 
-		inline operator mohra_internal_t() const { return static_cast<mohra_internal_t>(value); }
+		constexpr operator mohra_internal_t() const { return static_cast<mohra_internal_t>(value); }
 
-		inline bool verify() const { return value >= begin && value < end; }
-		inline char getChar() const { if (value < begin || value >= end) return '\0'; else return CHAR[value]; }
+		constexpr bool verify() const { return value >= begin && value < end; }
+		constexpr char getChar() const { if (value < begin || value >= end) return '\0'; else return CHAR[static_cast<int>(value)]; }
 
-		inline std::string to_string() const { return displayString[value]; }
+		inline std::string to_string() const { return displayString[static_cast<int>(value)]; }
 
 		friend class piece_t;
 	};
@@ -168,33 +168,35 @@ namespace rohit {
 		//mohra_t mohra;
 		//player_t player; // first: 0, second: 1
 		piece_storate_type value;
-		static piece_storate_type toInternal(const mohra_t mohra, const player_t player) { return player + (mohra << 1);  }
+		static constexpr piece_storate_type toInternal(const mohra_t mohra, const player_t player) { return player + (mohra << 1);  }
 		static const std::string displayString[];
 
 	public:
-		inline piece_t() : value(Empty) {}
-		piece_t(const piece_internal_t value) : value(value) {}
-		inline piece_t(const mohra_t mohra, player_t player) : value(toInternal(mohra, player)) {}
-		inline piece_t(const piece_t &piece) : value(piece.value) {}
+		constexpr piece_t() : value(Empty) {}
+		constexpr piece_t(const piece_internal_t value) : value(value) {}
+		constexpr piece_t(const mohra_t mohra, player_t player) : value(toInternal(mohra, player)) {}
+		constexpr piece_t(const piece_t &piece) : value(piece.value) {}
 
-		inline player_t getPlayer() const { return value & 0x01; }
-		inline mohra_t getMohra() const { return value >> 1; }
+		constexpr player_t getPlayer() const { return value & 0x01; }
+		constexpr mohra_t getMohra() const { return value >> 1; }
 
-		inline piece_t &operator++() { ++value; return *this; }
-		inline piece_t operator++(int) { piece_t temp = *this; ++*this; return temp; }
-		inline piece_t &operator--() { --value; return *this; }
-		inline piece_t operator--(int) { piece_t temp = *this; --*this; return temp; }
+		constexpr piece_t &operator++() { ++value; return *this; }
+		constexpr piece_t operator++(int) { piece_t temp = *this; ++*this; return temp; }
+		constexpr piece_t &operator--() { --value; return *this; }
+		constexpr piece_t operator--(int) { piece_t temp = *this; --*this; return temp; }
 
-		inline bool operator==(const piece_t rhs) const { return value == rhs.value; }
-		inline bool operator!=(const piece_t rhs) const { return value != rhs.value; }
-		inline bool operator==(const piece_internal_t rhs) const { return value == rhs; }
-		inline bool operator!=(const piece_internal_t rhs) const { return value != rhs; }
+		constexpr bool operator==(const piece_t rhs) const { return value == rhs.value; }
+		constexpr bool operator!=(const piece_t rhs) const { return value != rhs.value; }
+		constexpr bool operator==(const piece_internal_t rhs) const { return value == rhs; }
+		constexpr bool operator!=(const piece_internal_t rhs) const { return value != rhs; }
 
-		inline operator piece_internal_t() const { return static_cast<piece_internal_t>(value); }
+		constexpr piece_t& operator=(const piece_t& rhs) { value = rhs.value; return *this; }
 
-		inline bool verify() const { return value < 12; }
+		constexpr operator piece_internal_t() const { return static_cast<piece_internal_t>(value); }
 
-		inline static const piece_t getPiece(const char c) {
+		constexpr bool verify() const { return value < 12; }
+
+		constexpr static const piece_t getPiece(const char c) {
 			switch (c) {
 			case 'R': return firstRaja;
 			case 'r': return secondRaja;
@@ -268,20 +270,28 @@ namespace rohit {
 
 	class Pieces {
 	private:
-		static const mohra_t initialColMohra[col_max];
-		static const col_t initialCol[mohra_t::max][2];
+		static constexpr mohra_t initialColMohra[col_max] //Used only for padati promotion
+			{ mohra_t::Ratha, mohra_t::Ashva, mohra_t::Gaja, mohra_t::Senapati, mohra_t::Senapati, mohra_t::Gaja, mohra_t::Ashva, mohra_t::Ratha };
+		static constexpr col_t initialCol[mohra_t::max][2] {
+			{ 4_col, col_t::col_unknown },				// Raja
+			{ 3_col, 4_col },							// Senapati, marking both the center
+			{ 0_col, 7_col },							// Ratha
+			{ 2_col, 5_col },							// Gaja
+			{ 1_col, 6_col },							// Ashva
+			{ col_t::col_unknown, col_t::col_unknown },	// Padati
+		};
 
 	public:
-		static const int block_count = 64;
-		static const int piece_count = 32;
-		static const int row_size = 8;
-		static const int col_size = 8;
+		static constexpr int block_count = 64;
+		static constexpr int piece_count = 32;
+		static constexpr int row_size = 8;
+		static constexpr int col_size = 8;
 
 		inline static const mohra_t getInitialColMohra(col_t col) {
 			return initialColMohra[static_cast<size_t>(col)];
 		}
 
-		inline static const col_t getInitialCol(const mohra_t mohra, int index) {
+		inline static col_t getInitialCol(const mohra_t mohra, int index) {
 			return initialCol[mohra][index];
 		}
 
@@ -390,12 +400,12 @@ namespace rohit {
 		}
 
 	public:
-		Pieces() : blocks(), checked(player_t::none), activeCount() {}
+		Pieces() : blocks(), activeCount(), checked(player_t::none) {}
 		inline bool isEmpty(const Position pos) const { return getEntry(pos) == nullptr; }
 		inline bool isPlayerAt(const Position pos, const player_t player) const { return getEntry(pos)->val.getPlayer() == player; }
 
 		// inline _Entry *operator[](const Position pos) { return getEntry(pos); }
-		inline const _Entry *const operator[](const Position pos) const { return getEntry(pos); }
+		inline _Entry const * operator[](const Position pos) const { return getEntry(pos); }
 		inline PieceList &operator[](const piece_t piece) { return getMap(piece); }
 		inline const PieceList &operator[](const piece_t piece) const { return getMap(piece); }
 		inline const player_t isChecked() const { return checked; }
@@ -408,4 +418,3 @@ namespace rohit {
 
 	std::ostream& operator<<(std::ostream& os, const Pieces &pieces);
 }
-#pragma warning(pop)

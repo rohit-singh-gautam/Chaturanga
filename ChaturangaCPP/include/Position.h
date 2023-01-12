@@ -58,11 +58,12 @@ namespace rohit {
 		static const Position Captured;
 
 	private:
+		struct posvalue_type {
+			row_t row : 4;
+			col_t col : 4;
+		};
 		union {
-			struct {
-				row_t row : 4;
-				col_t col : 4;
-			};
+			posvalue_type posvalue;
 			position_storage_type value;
 		};
 
@@ -70,24 +71,24 @@ namespace rohit {
 		// row_t row; // bottom 0, top 7
 		// col_t col; // left 0, right 7
 
-		inline Position() : value(0) {}
-		inline Position(const row_t row, const col_t col) : row(row), col(col) {}
+		constexpr Position() : value(0) {}
+		constexpr Position(const row_t row, const col_t col) : posvalue {row, col} {}
 
 		// inline Position(const Position &pos) : row(pos.row), col(pos.col) {} // This is not required.
 
-		inline bool verify() const { return (value & ~0x77) == 0; }
+		constexpr bool verify() const { return (value & ~0x77) == 0; }
 
-		inline bool operator==(const Position& pos) const { return value == pos.value; }
-		inline bool operator!=(const Position& pos) const { return value != pos.value; }
+		constexpr bool operator==(const Position& pos) const { return value == pos.value; }
+		constexpr bool operator!=(const Position& pos) const { return value != pos.value; }
 
-		inline const row_t getRow() const { return static_cast<row_t>(row); }
-		inline const col_t getCol() const { return static_cast<col_t>(col); }
+		constexpr row_t getRow() const { return posvalue.row; }
+		constexpr col_t getCol() const { return posvalue.col; }
 
-		inline const size_t getRowIndex() const { return static_cast<size_t>(row); }
-		inline const size_t getColIndex() const { return static_cast<size_t>(col); }
+		constexpr size_t getRowIndex() const { return static_cast<size_t>(posvalue.row); }
+		constexpr size_t getColIndex() const { return static_cast<size_t>(posvalue.col); }
 
-		inline size_t getIndex() const { return ((size_t)col << 3) + (size_t)row; }
-		inline static size_t getIndex(row_t row, col_t col) { return ((size_t)col << 3) + (size_t)row; }
+		constexpr size_t getIndex() const { return getIndex(posvalue.row, posvalue.col); }
+		constexpr static size_t getIndex(row_t row, col_t col) { return ((size_t)col << 3) + (size_t)row; }
 
 	};
 
@@ -97,10 +98,10 @@ namespace rohit {
 
 	public:
 
-		inline DiffPosition(const row_t row, const col_t col) : row(row), col(col) {}
+		constexpr DiffPosition(const row_t row, const col_t col) : row(row), col(col) {}
 
-		inline const row_t getRow() const { return row; }
-		inline const col_t getCol() const { return col; }
+		constexpr row_t getRow() const { return row; }
+		constexpr col_t getCol() const { return col; }
 
 		inline const DiffPosition getDirectionDiff() const { return { row_direction[static_cast<size_t>(getRow() + 7_row)], col_direction[static_cast<size_t>(getCol() + 7_col)] }; }
 	};

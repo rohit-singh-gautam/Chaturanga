@@ -45,8 +45,7 @@ namespace rohit {
 
 	public:
 		// Initialization
-		inline Ashtapada() : currentPlayer(player_t::first), history(), chalFactory(*this),
-			checkmate(player_t::none) {
+		inline Ashtapada() : history(), chalFactory(*this), checkmate(player_t::none), currentPlayer(player_t::first) {
 			findValidMoves();
 		}
 		~Ashtapada();

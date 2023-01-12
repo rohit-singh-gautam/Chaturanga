@@ -57,7 +57,7 @@ namespace rohit {
 		}
 	}
 
-	bool MohraChal::addValidEmpty(const Position oldPos, const DiffPosition diffPos, StoreType & moves, const player_t player) const
+	bool MohraChal::addValidEmpty(const Position oldPos, const DiffPosition diffPos, StoreType & moves) const
 	{
 		const Position newPos = oldPos + diffPos;
 		if (!newPos.verify()) return false;
@@ -74,7 +74,6 @@ namespace rohit {
 	{
 		const Position newPos = oldPos + diffPos;
 		if (!newPos.verify()) return false;
-		const piece_t &piece = pieces[newPos]->val;
 		if (pieces.isEmpty(newPos))  return true;
 
 		if (pieces.isPlayerAt(newPos, player.opponent())) {
@@ -384,7 +383,7 @@ namespace rohit {
 	{
 		assert(entry.getMohra() == mohra_t::Padati);
 		player_t player = entry.getPlayer();
-		addValidEmpty(entry.position, posList[player], moves, player);
+		addValidEmpty(entry.position, posList[player], moves);
 
 		for (const DiffPosition &diffPos : capturePosLists[player]) {
 			addValidCapture(entry.position, diffPos, moves, player);

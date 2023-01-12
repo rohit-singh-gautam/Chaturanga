@@ -13,11 +13,11 @@ namespace rohit {
 		static const board_score_type lowest_score[];
 
 	private:
-		board_hash_type zobristTable[row_max][col_max][piece_t::max];
-
 		const Ashtapada &ashtapada;
 		board_score_type score;
 		board_hash_type hash;
+
+		board_hash_type zobristTable[row_max][col_max][piece_t::max];
 
 	public:
 		Evaluator(const Ashtapada &ashtapada);
