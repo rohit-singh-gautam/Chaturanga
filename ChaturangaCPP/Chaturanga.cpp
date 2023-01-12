@@ -3,9 +3,11 @@
 
 #include <iostream>
 
-#include "Ashtapada.h"
-#include "NitiAyog.h"
-#include "Evaluator.h"
+#include <commandline.h>
+#include <Ashtapada.h>
+#include <NitiAyog.h>
+#include <Evaluator.h>
+#include <version.h>
 #include <chrono>
 #include <thread>
 #include <algorithm>
@@ -64,9 +66,8 @@ std::string board[] = {
 
 };
 
-void TestAshtapada() {
-	const int maxdepth = 9;
-	const int depth[] = { 3, 3 };
+void TestAshtapada(const niti_depth_type maxdepth, const niti_depth_type player1depth, const niti_depth_type player2depth) {
+	const int depth[] { player1depth, player2depth };
 	std::vector<Chal> moves;
 
 	std::cout.imbue(std::locale(""));
@@ -93,8 +94,32 @@ void TestAshtapada() {
 	std::cout << "Checkmate: " << pAshtapada->isCheckmate().to_string() << " player" << std::endl;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-	TestAshtapada();
+	bool display_version { false };
+	uint16_t maxdepth { 9 };
+    uint16_t player1depth { 3 };
+    uint16_t player2depth { 3 };
+    rohit::commandline param_parser(
+        "Chaturanga",
+        "Chaturanga two player board game",
+        {
+            {'v', "version", "Display version", display_version},
+			{'m', "maxdepth", "Max depth", "Maximum depth to which seach will be performed", maxdepth},
+            {'f', "player1", "Player1 Depth", "Player1 or first search depth", player1depth},
+            {'s', "player2", "Player2 Depth", "Player2 or second search depth", player2depth}
+        }
+    );
+
+    if (!param_parser.parser(argc, argv)) {
+        std::cout << param_parser.usage() << std::endl;
+        return EXIT_SUCCESS;
+    }
+
+    if (display_version) {
+        std::cout << param_parser.get_name() << " " << VERSION_MAJOR << "." << VERSION_MINOR << std::endl;
+		return EXIT_SUCCESS;
+    }
+	TestAshtapada(maxdepth, player1depth, player2depth);
 	return 0;
 }
