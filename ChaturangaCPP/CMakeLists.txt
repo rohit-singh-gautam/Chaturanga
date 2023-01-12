@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-# add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-vla)
 add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-vla)
 
 project(chaturanga VERSION 1.0)
