@@ -25,6 +25,8 @@ int main(int const argc, char const * const * const argv) {
 
     if (display_version) {
         std::cout << param_parser.get_name() << " " << VERSION_MAJOR << "." << VERSION_MINOR << std::endl;
+        return EXIT_SUCCESS;
     }
 
+    rohit::ashtapada ashtapada;
 }

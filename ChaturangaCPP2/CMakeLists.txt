@@ -7,11 +7,11 @@ add_executable(chaturanga
     commandline.cpp)
 
 include_directories(chaturanga
-    include
+    $(CMAKE_CURRENT_SOURCE_DIR)/include
     ${CMAKE_CURRENT_BINARY_DIR}/include
     )
 
 configure_file(include/version.h.in include/version.h)
 
-target_compile_features(chaturanga PRIVATE cxx_std_20)
+target_compile_features(chaturanga PRIVATE cxx_std_23)
 
