@@ -10,7 +10,7 @@ include_directories(chaturanga
     )
 
 add_executable(chaturanga
-	Ashtapada.cpp  Chal.cpp  Chaturanga.cpp  Evaluator.cpp  NitiAyog.cpp  Position.cpp  pieces.cpp commandline.cpp
+	Ashtapada.cpp  Chal.cpp  Chaturanga.cpp  Evaluator.cpp  NitiAyog.cpp  pieces.cpp commandline.cpp
 	include/Ashtapada.h include/Evaluator.h include/LinkedList.h include/Position.h
 	include/Store.h include/pieces.h include/Chal.h include/LRU.h include/NitiAyog.h
 	include/ReleaseCheck.h include/storage.h

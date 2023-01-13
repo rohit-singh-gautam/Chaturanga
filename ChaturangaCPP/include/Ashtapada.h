@@ -7,9 +7,17 @@ namespace rohit {
 	class Ashtapada : public Pieces
 	{
 	public:
-		static const std::string DEFAULT;
-		static const size_t DEFAULTLength;
-		static const size_t max_chal = 500;
+		static constexpr std::string_view DEFAULT {
+			"cagrsgac"
+			"pppppppp"
+			"........"
+			"........"
+			"........"
+			"........"
+			"PPPPPPPP"
+			"CAGSRGAC"
+		};
+		static constexpr size_t max_chal = 500;
 
 		using HistoryType = SimpleStore<Chal, max_chal>;
 
@@ -49,6 +57,11 @@ namespace rohit {
 			findValidMoves();
 		}
 		~Ashtapada();
+
+		inline bool apply(const std::string_view &str, const player_t currentPlayer) {
+			if (str.size() != Pieces::block_count) return false;
+			return apply(str.data(), currentPlayer);
+		}
 
 		inline bool apply(const std::string &str, const player_t currentPlayer) {
 			if (str.size() != Pieces::block_count) return false;

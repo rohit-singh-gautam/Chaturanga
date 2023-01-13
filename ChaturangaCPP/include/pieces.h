@@ -4,6 +4,7 @@
 #include "ReleaseCheck.h"
 #include <cassert>
 #include <string>
+#include <string_view>
 
 namespace rohit {
 
@@ -21,7 +22,13 @@ namespace rohit {
 
 	private:
 		player_storate_type value;
-		static const std::string displayString[];
+		static constexpr std::string_view displayString[] {
+			"First",
+			"Second",
+			"Unknown",
+			"None",
+			"Invalid"
+		};
 		static constexpr int signArray[] { -1, 1, 0, 0, 0 };
 
 		constexpr size_t getIndex() const { return static_cast<size_t>(value); }
@@ -59,7 +66,7 @@ namespace rohit {
 		constexpr bool verify() const { return value == player_internal_t::first || value == player_internal_t::second; }
 
 		constexpr int getSign() const { return signArray[getIndex()]; }
-		inline std::string to_string() const { return displayString[getIndex()]; }
+		constexpr std::string_view to_string() const { return displayString[getIndex()]; }
 
 		friend class piece_t;
 		friend std::ostream& operator<<(std::ostream& os, const player_t player);
@@ -83,7 +90,16 @@ namespace rohit {
 	private:
 		mohra_storate_type value;
 		constexpr static char CHAR[] { 'R', 'S', 'C', 'G', 'A', 'P', '\0' };
-		static const std::string displayString[];
+		static constexpr std::string_view displayString[] {
+			"Raja",
+			"Senapati",
+			"Ratha",
+			"Gaja",
+			"Ashva",
+			"Padati",
+			"Empty",
+			"Invalid"
+		};
 
 		constexpr mohra_t(unsigned char value) : value(static_cast<mohra_storate_type>(value)) {}
 
@@ -106,7 +122,7 @@ namespace rohit {
 		constexpr bool verify() const { return value >= begin && value < end; }
 		constexpr char getChar() const { if (value < begin || value >= end) return '\0'; else return CHAR[static_cast<int>(value)]; }
 
-		inline std::string to_string() const { return displayString[static_cast<int>(value)]; }
+		constexpr std::string_view to_string() const { return displayString[static_cast<int>(value)]; }
 
 		friend class piece_t;
 	};
@@ -114,36 +130,35 @@ namespace rohit {
 	class bitmohra_t {
 		bitmohra_internal_t value;
 
-		inline static bitmohra_internal_t to_bitmohra_internal(const mohra_t mohra) { return 1 << mohra; }
+		constexpr static bitmohra_internal_t to_bitmohra_internal(const mohra_t mohra) { return 1 << mohra; }
 	public:
-		bitmohra_t(const bitmohra_internal_t value) : value(value) {}
-		bitmohra_t(const mohra_t &mohra) : value(to_bitmohra_internal(mohra)) {}
+		constexpr bitmohra_t(const bitmohra_internal_t value) : value(value) {}
+		constexpr bitmohra_t(const mohra_t &mohra) : value(to_bitmohra_internal(mohra)) {}
 
-		static const bitmohra_t Empty;
-		static const bitmohra_t Raja;
-		static const bitmohra_t Senapati;
-		static const bitmohra_t Ratha;
-		static const bitmohra_t Gaja;
-		static const bitmohra_t Ashva;
-		static const bitmohra_t Padati;
-		static const bitmohra_t End;
+		constexpr bitmohra_t &operator++() { value <<= 1; return *this; }
+		constexpr bitmohra_t operator++(int) { bitmohra_t temp = *this; ++*this; return temp; }
+		constexpr bitmohra_t &operator--() { value >>= 1; return *this; }
+		constexpr bitmohra_t operator--(int) { bitmohra_t temp = *this; --*this; return temp; }
+		constexpr const bitmohra_t operator&(const bitmohra_t rhs) const { return value & rhs.value; }
+		constexpr const bitmohra_t operator|(const bitmohra_t rhs) const { return value | rhs.value; }
+		constexpr const bitmohra_t operator&(const mohra_t rhs) const { return value & to_bitmohra_internal(rhs); }
+		constexpr bool operator==(const mohra_t rhs) const { return value == to_bitmohra_internal(rhs); }
+		constexpr bool contains(const mohra_t rhs) const { return (value & to_bitmohra_internal(rhs)) != Empty; }
 
-		inline bitmohra_t &operator++() { value <<= 1; return *this; }
-		inline bitmohra_t operator++(int) { bitmohra_t temp = *this; ++*this; return temp; }
-		inline bitmohra_t &operator--() { value >>= 1; return *this; }
-		inline bitmohra_t operator--(int) { bitmohra_t temp = *this; --*this; return temp; }
-		inline const bitmohra_t operator&(const bitmohra_t rhs) const { return value & rhs.value; }
-		inline const bitmohra_t operator|(const bitmohra_t rhs) const { return value | rhs.value; }
-		inline const bitmohra_t operator&(const mohra_t rhs) const { return value & to_bitmohra_internal(rhs); }
-		inline bool operator==(const mohra_t rhs) const { return value == to_bitmohra_internal(rhs); }
-		inline bool contains(const mohra_t rhs) const { return (value & to_bitmohra_internal(rhs)) != Empty.value; }
+		static constexpr bitmohra_internal_t Empty { 0 };
+		static constexpr bitmohra_internal_t Raja { 1 };
+		static constexpr bitmohra_internal_t Senapati {2 };
+		static constexpr bitmohra_internal_t Ratha { 4 };
+		static constexpr bitmohra_internal_t Gaja { 8 };
+		static constexpr bitmohra_internal_t Ashva { 16 };
+		static constexpr bitmohra_internal_t Padati { 32 };
+		static constexpr bitmohra_internal_t End { 64 };
 	};
 
 	struct PieceCompressedMultiple;
 
 	class piece_t {
 	public:
-
 		enum piece_internal_t : piece_storate_type {
 			begin = 0,
 			firstRaja = begin,
@@ -169,7 +184,22 @@ namespace rohit {
 		//player_t player; // first: 0, second: 1
 		piece_storate_type value;
 		static constexpr piece_storate_type toInternal(const mohra_t mohra, const player_t player) { return player + (mohra << 1);  }
-		static const std::string displayString[];
+		static constexpr std::string_view displayString[] {
+			"firstRaja",
+			"secondRaja",
+			"firstSenapati",
+			"secondSenapati",
+			"firstRatha",
+			"secondRatha",
+			"firstGaja",
+			"secondGaja",
+			"firstAshva",
+			"secondAshva",
+			"firstPadati",
+			"secondPadati",
+			"Empty",
+			"Unknown"
+		};
 
 	public:
 		constexpr piece_t() : value(Empty) {}
@@ -295,7 +325,7 @@ namespace rohit {
 			return initialCol[mohra][index];
 		}
 
-		static const int MaxPossibleMohra[piece_t::max];
+		static constexpr int MaxPossibleMohra[piece_t::max] { 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 8, 8 };
 
 		typedef struct fixed_list_entry<PieceEntry> _Entry;
 		typedef class fixed_list_simple<PieceEntry> list;

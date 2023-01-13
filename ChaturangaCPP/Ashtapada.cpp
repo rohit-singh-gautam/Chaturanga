@@ -287,20 +287,6 @@ namespace rohit {
 		return true;
 	}
 
-	// Count will be 1 less i.e. 0 = 1 and 7 = 8 and 15 = 16
-
-	const std::string Ashtapada::DEFAULT =
-		"cagrsgac"
-		"pppppppp"
-		"........"
-		"........"
-		"........"
-		"........"
-		"PPPPPPPP"
-		"CAGSRGAC";
-
-	const size_t Ashtapada::DEFAULTLength = sizeof(Ashtapada::DEFAULT) / sizeof(Ashtapada::DEFAULT[0]);
-
 	std::ostream& operator<<(std::ostream& os, const MohraChal::StoreType &moves) {
 		for (size_t i = 0; i < moves.size(); i++) {
 			os << i << ":" << moves[i] << "; ";

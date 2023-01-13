@@ -82,29 +82,6 @@ namespace rohit {
 		return false;
 	}
 
-	const bitmohra_t MohraChal::unsafe[15][15] = {
-		//  {   1,    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14,   15},	
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//1
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//2
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//3
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//4
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//5
-			{   0,    0,    0,    0,    0,    8,   16,    4,   16,    8,    0,    0,    0,    0,    0},		//6
-			{   0,    0,    0,    0,    0,   16,    3,    5,    3,   16,    0,    0,    0,    0,    0},		//7
-			{   4,    4,    4,    4,    4,    4,    5, 0x37,    5,    4,    4,    4,    4,    4,    4},		//8
-			{   0,    0,    0,    0,    0,   16,    3,    5,    3,   16,    0,    0,    0,    0,    0},		//9
-			{   0,    0,    0,    0,    0,    8,   16,    4,   16,    8,    0,    0,    0,    0,    0},		//10
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//11
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//12
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//13
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//14
-			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0}		//15
-	};
-
-	const Position MohraChal::unsafeCenter(7_row, 7_col);
-
-	MohraChal::MohraChal(const Pieces & pieces) : pieces(pieces) {}
-
 	bool MohraChal::isAttackedHelper(const mohra_t by, const Position to) const
 	{
 		if (pieces.isEmpty(to)) return 0;
@@ -115,8 +92,8 @@ namespace rohit {
 		auto &activeList = pieceList.getActive();
 		for (const auto &entry : activeList) {
 			const DiffPosition diffPos = to - entry.position;
-			row_t row = unsafeCenter.getRow() + diffPos.getRow();
-			col_t col = unsafeCenter.getCol() + diffPos.getCol();
+			const auto row = unsafeCenter.getRow() + diffPos.getRow();
+			const auto col = unsafeCenter.getCol() + diffPos.getCol();
 			const bitmohra_t bitmohra = getUnsafe(row, col);
 
 			if (bitmohra.contains(by)) return true;
@@ -125,19 +102,6 @@ namespace rohit {
 
 		return false;
 	}
-
-	const DiffPosition RajaChal::posList[] = {
-		{0_row, 1_col},
-		{1_row, 1_col},
-		{1_row, 0_col},
-		{1_row, -1_col},
-		{0_row, -1_col},
-		{-1_row, -1_col},
-		{-1_row, 0_col},
-		{-1_row, 1_col}
-	};
-
-	RajaChal::RajaChal(const Pieces & pieces) : MohraChal(pieces) {}
 
 	void RajaChal::addChal(const PieceEntry &entry, StoreType &moves) const
 	{
@@ -169,15 +133,6 @@ namespace rohit {
 		return isAttackedHelper(mohra_t::Raja, to);
 	}
 
-	const DiffPosition SenapatiChal::posList[] = {
-		{1_row, 1_col},
-		{1_row, -1_col},
-		{-1_row, -1_col},
-		{-1_row, 1_col}
-	};
-
-	SenapatiChal::SenapatiChal(const Pieces & pieces) : MohraChal(pieces) {}
-
 	void SenapatiChal::addChal(const PieceEntry &entry, StoreType &moves) const
 	{
 		assert(entry.getMohra() == mohra_t::Senapati);
@@ -207,8 +162,6 @@ namespace rohit {
 	{
 		return isAttackedHelper(mohra_t::Senapati, to);
 	}
-
-	RathaChal::RathaChal(const Pieces &pieces) : MohraChal(pieces) {}
 
 	void RathaChal::addChal(const PieceEntry &entry, StoreType &moves) const
 	{
@@ -287,16 +240,6 @@ namespace rohit {
 		return false;
 	}
 
-	const DiffPosition GajaChal::posList[] = {
-		{2_row, 2_col},
-		{2_row, -2_col},
-		{-2_row, -2_col},
-		{-2_row, 2_col}
-	};
-
-
-	GajaChal::GajaChal(const Pieces & pieces) : MohraChal(pieces) {}
-
 	void GajaChal::addChal(const PieceEntry &entry, StoreType &moves) const
 	{
 		assert(entry.getMohra() == mohra_t::Gaja);
@@ -327,19 +270,6 @@ namespace rohit {
 		return isAttackedHelper(mohra_t::Gaja, to);
 	}
 
-	const DiffPosition AshvaChal::posList[] = {
-		{2_row, 1_col},
-		{2_row, -1_col},
-		{-2_row, 1_col},
-		{-2_row, -1_col},
-		{1_row, 2_col},
-		{-1_row, 2_col},
-		{1_row, -2_col},
-		{-1_row, -2_col}
-	};
-
-	AshvaChal::AshvaChal(const Pieces & pieces) : MohraChal(pieces) {}
-
 	void AshvaChal::addChal(const PieceEntry &entry, StoreType &moves) const
 	{
 		assert(entry.getMohra() == mohra_t::Ashva);
@@ -369,15 +299,6 @@ namespace rohit {
 	{
 		return isAttackedHelper(mohra_t::Ashva, to);
 	}
-
-	const DiffPosition PadatiChal::capturePosLists[2][2] = {
-		{ {1_row, 1_col}, {1_row, -1_col} },
-		{ {-1_row, 1_col}, {-1_row, -1_col} }
-	};
-
-	const DiffPosition PadatiChal::posList[] = { {1_row, 0_col}, {-1_row, 0_col} };
-
-	PadatiChal::PadatiChal(const Pieces & pieces) : MohraChal(pieces) {}
 
 	void PadatiChal::addChal(const PieceEntry &entry, StoreType &moves) const
 	{

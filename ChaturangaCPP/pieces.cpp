@@ -3,58 +3,12 @@
 
 namespace rohit {
 
-	const std::string player_t::displayString[]{
-		"First",
-		"Second",
-		"Unknown",
-		"None",
-		"Invalid"
-	};
-
-	const std::string mohra_t::displayString[]{
-		"Raja",
-		"Senapati",
-		"Ratha",
-		"Gaja",
-		"Ashva",
-		"Padati",
-		"Empty",
-		"Invalid"
-	};
-
-	const bitmohra_t bitmohra_t::Empty(0);
-	const bitmohra_t bitmohra_t::Raja(1);
-	const bitmohra_t bitmohra_t::Senapati(2);
-	const bitmohra_t bitmohra_t::Ratha(4);
-	const bitmohra_t bitmohra_t::Gaja(8);
-	const bitmohra_t bitmohra_t::Ashva(16);
-	const bitmohra_t bitmohra_t::Padati(32);
-	const bitmohra_t bitmohra_t::End(64);
-
-
 	std::ostream & operator<<(std::ostream & os, const player_t player)
 	{
 		if (player > player_t::unknown) os << "Invalid";
 		else os << player_t::displayString[player];
 		return os;
 	}
-
-	const std::string piece_t::displayString[]{
-	"firstRaja",
-	"secondRaja",
-	"firstSenapati",
-	"secondSenapati",
-	"firstRatha",
-	"secondRatha",
-	"firstGaja",
-	"secondGaja",
-	"firstAshva",
-	"secondAshva",
-	"firstPadati",
-	"secondPadati",
-	"Empty",
-	"Unknown"
-	};
 
 	std::ostream& operator<<(std::ostream& os, const piece_t piece) {
 		char mohraChar = piece.getMohra().getChar();
@@ -82,8 +36,6 @@ namespace rohit {
 		os << "Active: " << pieceList.activeList << "; Captured: " << pieceList.capturedList;
 		return os;
 	}
-
-	const int Pieces::MaxPossibleMohra[piece_t::max] = { 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 8, 8 };
 
 	void Pieces::reset()
 	{

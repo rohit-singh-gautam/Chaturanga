@@ -7,10 +7,10 @@ namespace rohit {
 	class Evaluator
 	{
 	public:
-		static const board_score_type mohraScores[];
-		static const board_score_type checkScore[];
-		static const board_score_type checkmateScore[];
-		static const board_score_type lowest_score[];
+		static constexpr board_score_type mohraScores[] { 0, 0, -20, 20, -80, 80, -30, 30, -40, 40, -11, 11, 0, 0 };
+		static constexpr board_score_type checkScore[] { 10, -10, 0 };
+		static constexpr board_score_type checkmateScore[] { 12345, -12345, 0 };
+		static constexpr board_score_type lowest_score[] { 12345, -12345 };
 
 	private:
 		const Ashtapada &ashtapada;
@@ -21,7 +21,6 @@ namespace rohit {
 
 	public:
 		Evaluator(const Ashtapada &ashtapada);
-		~Evaluator();
 
 		inline board_score_type getScore() { return score + checkScore[ashtapada.isChecked()]; }
 		inline board_hash_type getHash() { return hash; }

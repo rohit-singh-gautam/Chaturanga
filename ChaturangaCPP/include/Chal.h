@@ -71,7 +71,24 @@ namespace rohit {
 
 	class MohraChal {
 	private:
-		static const bitmohra_t unsafe[15][15];
+		static constexpr bitmohra_t unsafe[15][15] {
+		//  {   1,    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,   12,   13,   14,   15},	
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//1
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//2
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//3
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//4
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//5
+			{   0,    0,    0,    0,    0,    8,   16,    4,   16,    8,    0,    0,    0,    0,    0},		//6
+			{   0,    0,    0,    0,    0,   16,    3,    5,    3,   16,    0,    0,    0,    0,    0},		//7
+			{   4,    4,    4,    4,    4,    4,    5, 0x37,    5,    4,    4,    4,    4,    4,    4},		//8
+			{   0,    0,    0,    0,    0,   16,    3,    5,    3,   16,    0,    0,    0,    0,    0},		//9
+			{   0,    0,    0,    0,    0,    8,   16,    4,   16,    8,    0,    0,    0,    0,    0},		//10
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//11
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//12
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//13
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0},		//14
+			{   0,    0,    0,    0,    0,    0,    0,    4,    0,    0,    0,    0,    0,    0,    0}		//15
+		};
 
 	public:
 		static constexpr const int max_possible_chal =
@@ -84,14 +101,14 @@ namespace rohit {
 		bool addValidEmpty(const Position oldPos, const DiffPosition diffPos, StoreType &moves) const;
 		bool addValidCapture(const Position oldPos, const DiffPosition diffPos, StoreType &moves, const player_t player) const;
 
-		static const Position unsafeCenter;
-		inline bitmohra_t getUnsafe(row_t row, col_t col) const {
+		static constexpr Position unsafeCenter { 7_row, 7_col };
+		constexpr bitmohra_t getUnsafe(row_t row, col_t col) const {
 			return unsafe[static_cast<size_t>(row)][static_cast<size_t>(col)];
 		}
 		bool isAttackedHelper(const mohra_t by, const Position to) const;
 
 	public:
-		MohraChal(const Pieces &pieces);
+		constexpr MohraChal(const Pieces &pieces) : pieces { pieces } { }
 		virtual void addChal(const PieceEntry &entry, StoreType &moves) const = 0;
 		inline void addChal(const PieceList &positionList, StoreType &moves) const {
 			const PieceList::list &activeList = positionList.getActive();
@@ -102,10 +119,19 @@ namespace rohit {
 	};
 
 	class RajaChal : public MohraChal {
-		const static DiffPosition posList[];
+		constexpr static DiffPosition posList[] {
+			{0_row, 1_col},
+			{1_row, 1_col},
+			{1_row, 0_col},
+			{1_row, -1_col},
+			{0_row, -1_col},
+			{-1_row, -1_col},
+			{-1_row, 0_col},
+			{-1_row, 1_col}
+		};
 
 	public:
-		RajaChal(const Pieces &pieces);
+		constexpr RajaChal(const Pieces &pieces) : MohraChal { pieces } { }
 
 		void addChal(const PieceEntry &entry, StoreType &moves) const override;
 		bool validateChal(const Chal &chal) const override;
@@ -113,10 +139,15 @@ namespace rohit {
 	};
 
 	class SenapatiChal : public MohraChal {
-		const static DiffPosition posList[];
+		constexpr static DiffPosition posList[] {
+			{1_row, 1_col},
+			{1_row, -1_col},
+			{-1_row, -1_col},
+			{-1_row, 1_col}
+		};
 
 	public:
-		SenapatiChal(const Pieces &pieces);
+		constexpr SenapatiChal(const Pieces &pieces) : MohraChal { pieces } { }
 
 		void addChal(const PieceEntry &entry, StoreType &moves) const override;
 		bool validateChal(const Chal &chal) const override;
@@ -125,7 +156,7 @@ namespace rohit {
 
 	class RathaChal : public MohraChal {
 	public:
-		RathaChal(const Pieces &pieces);
+		constexpr RathaChal(const Pieces &pieces) : MohraChal { pieces } { }
 
 		void addChal(const PieceEntry &entry, StoreType &moves) const override;
 		bool validateChal(const Chal &chal) const override;
@@ -133,10 +164,15 @@ namespace rohit {
 	};
 
 	class GajaChal : public MohraChal {
-		const static DiffPosition posList[];
+		constexpr static DiffPosition posList[] {
+			{2_row, 2_col},
+			{2_row, -2_col},
+			{-2_row, -2_col},
+			{-2_row, 2_col}
+		};
 
 	public:
-		GajaChal(const Pieces &pieces);
+		constexpr GajaChal(const Pieces &pieces) : MohraChal { pieces } { }
 
 		void addChal(const PieceEntry &entry, StoreType &moves) const override;
 		bool validateChal(const Chal &chal) const override;
@@ -144,10 +180,19 @@ namespace rohit {
 	};
 
 	class AshvaChal : public MohraChal {
-		const static DiffPosition posList[];
+		constexpr static DiffPosition posList[] {
+			{2_row, 1_col},
+			{2_row, -1_col},
+			{-2_row, 1_col},
+			{-2_row, -1_col},
+			{1_row, 2_col},
+			{-1_row, 2_col},
+			{1_row, -2_col},
+			{-1_row, -2_col}
+		};
 
 	public:
-		AshvaChal(const Pieces &pieces);
+		constexpr AshvaChal(const Pieces &pieces) : MohraChal { pieces } { }
 
 		void addChal(const PieceEntry &entry, StoreType &moves) const override;
 		bool validateChal(const Chal &chal) const override;
@@ -155,11 +200,15 @@ namespace rohit {
 	};
 
 	class PadatiChal : public MohraChal {
-		const static DiffPosition capturePosLists[2][2];
-		const static DiffPosition posList[];
+		constexpr static DiffPosition capturePosLists[2][2] {
+			{ {1_row, 1_col}, {1_row, -1_col} },
+			{ {-1_row, 1_col}, {-1_row, -1_col} }
+		};
+		
+		constexpr static DiffPosition posList[] { {1_row, 0_col}, {-1_row, 0_col} };
 
 	public:
-		PadatiChal(const Pieces &pieces);
+		constexpr PadatiChal(const Pieces &pieces) : MohraChal { pieces } { }
 
 		void addChal(const PieceEntry &entry, StoreType &moves) const override;
 		bool validateChal(const Chal &chal) const override;

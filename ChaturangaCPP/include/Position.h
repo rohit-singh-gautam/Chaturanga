@@ -35,20 +35,20 @@ namespace rohit {
 	constexpr col_t operator-(col_t lhs, col_t rhs) { return static_cast<col_t>(static_cast<int>(lhs) - static_cast<int>(rhs)); }
 	constexpr row_t operator-(row_t val) { return static_cast<row_t>(-static_cast<int>(val)); }
 	constexpr col_t operator-(col_t val) { return static_cast<col_t>(-static_cast<int>(val)); }
-	inline row_t& operator++(row_t& self) { return (self = self + 1_row); }
-	inline col_t& operator++(col_t& self) { return (self = self + 1_col); }
-	inline row_t& operator--(row_t& self) { return (self = self - 1_row); }
-	inline col_t& operator--(col_t& self) { return (self = self - 1_col); }
-	inline row_t operator++(row_t& self, int) { auto ret = self; self = self + 1_row; return ret; }
-	inline col_t operator++(col_t& self, int) { auto ret = self; self = self + 1_col; return ret; }
-	inline row_t operator--(row_t& self, int) { auto ret = self; self = self - 1_row; return ret; }
-	inline col_t operator--(col_t& self, int) { auto ret = self; self = self - 1_col; return ret; }
+	constexpr row_t& operator++(row_t& self) { return (self = self + 1_row); }
+	constexpr col_t& operator++(col_t& self) { return (self = self + 1_col); }
+	constexpr row_t& operator--(row_t& self) { return (self = self - 1_row); }
+	constexpr col_t& operator--(col_t& self) { return (self = self - 1_col); }
+	constexpr row_t operator++(row_t& self, int) { auto ret = self; self = self + 1_row; return ret; }
+	constexpr col_t operator++(col_t& self, int) { auto ret = self; self = self + 1_col; return ret; }
+	constexpr row_t operator--(row_t& self, int) { auto ret = self; self = self - 1_row; return ret; }
+	constexpr col_t operator--(col_t& self, int) { auto ret = self; self = self - 1_col; return ret; }
 
-	static const row_t row_direction[] = {
+	constexpr row_t row_direction[] = {
 		-1_row, -1_row, -1_row, -1_row, -1_row, -1_row, -1_row, 0_row, 1_row, 1_row, 1_row, 1_row, 1_row, 1_row, 1_row
 	};
 
-	static const col_t col_direction[] = {
+	constexpr col_t col_direction[] = {
 		-1_col, -1_col, -1_col, -1_col, -1_col, -1_col, -1_col, 0_col, 1_col, 1_col, 1_col, 1_col, 1_col, 1_col, 1_col
 	};
 
@@ -92,22 +92,23 @@ namespace rohit {
 
 	};
 
+	constexpr const Position Position::Captured { row_t::row_unknown, col_t::col_unknown };
+
 	class DiffPosition {
 		row_t row;
 		col_t col;
 
 	public:
-
 		constexpr DiffPosition(const row_t row, const col_t col) : row(row), col(col) {}
 
 		constexpr row_t getRow() const { return row; }
 		constexpr col_t getCol() const { return col; }
 
-		inline const DiffPosition getDirectionDiff() const { return { row_direction[static_cast<size_t>(getRow() + 7_row)], col_direction[static_cast<size_t>(getCol() + 7_col)] }; }
+		constexpr DiffPosition getDirectionDiff() const { return { row_direction[static_cast<size_t>(getRow() + 7_row)], col_direction[static_cast<size_t>(getCol() + 7_col)] }; }
 	};
 
-	inline const Position operator+(const Position& lhs, const DiffPosition& rhs) { return { lhs.getRow() + rhs.getRow(), lhs.getCol() + rhs.getCol() }; }
-	inline const DiffPosition operator-(const Position& lhs, const Position& rhs) { return { lhs.getRow() - rhs.getRow(), lhs.getCol() - rhs.getCol() }; }
+	constexpr const Position operator+(const Position& lhs, const DiffPosition& rhs) { return { lhs.getRow() + rhs.getRow(), lhs.getCol() + rhs.getCol() }; }
+	constexpr const DiffPosition operator-(const Position& lhs, const Position& rhs) { return { lhs.getRow() - rhs.getRow(), lhs.getCol() - rhs.getCol() }; }
 
 	inline std::ostream& operator<<(std::ostream& os, const row_t& row) { return os << (int)row; }
 	inline std::ostream& operator<<(std::ostream& os, const col_t& col) { return os << (int)col; }
