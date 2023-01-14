@@ -201,6 +201,23 @@ namespace rohit {
 			"Unknown"
 		};
 
+		static constexpr std::string_view shortString[] {
+			"\033[0;0m\xF0\x9F\x91\xB3\033[0m",
+			"\033[0;7m\xF0\x9F\x91\xB3\033[0m",
+			"\033[0;0m\xF0\x9F\x91\xB4\033[0m",
+			"\033[0;7m\xF0\x9F\x91\xB4\033[0m",
+			"\033[0;0m\xF0\x9F\x8F\x87\033[0m",
+			"\033[0;7m\xF0\x9F\x8F\x87\033[0m",
+			"\033[0;0m\xF0\x9F\x90\x98\033[0m",
+			"\033[0;7m\xF0\x9F\x90\x98\033[0m",
+			"\033[0;0m\xF0\x9F\x90\xB4\033[0m",
+			"\033[0;7m\xF0\x9F\x90\xB4\033[0m",
+			"\033[0;0m\xF0\x9F\x92\x82\033[0m",
+			"\033[0;7m\xF0\x9F\x92\x82\033[0m",
+			"\033[0;0m\xE2\xAC\x9C\033[0m",
+			"??"
+		};
+
 	public:
 		constexpr piece_t() : value(Empty) {}
 		constexpr piece_t(const piece_internal_t value) : value(value) {}
@@ -243,6 +260,14 @@ namespace rohit {
 			case ' ': case '.': return Empty;
 			default: return Unknown;
 			}
+		}
+
+		constexpr const std::string_view &getShortString() const {
+			return shortString[value];
+		}
+
+		constexpr static const std::string_view &getNullShortString() {
+			return shortString[Empty];
 		}
 	};
 

@@ -17,8 +17,7 @@ namespace rohit {
 			os.setstate(std::ios_base::failbit);
 		}
 		else {
-			char base = piece.getPlayer() == player_t::first ? mohraChar : mohraChar + -'A' + 'a';
-			os << base;
+			os << piece.getShortString();
 		}
 		return os;
 	}
@@ -83,11 +82,9 @@ namespace rohit {
 				const Position pos { row, col };
 				const Pieces::_Entry *pieceEntry = pieces[pos];
 				if (pieceEntry == nullptr) {
-					os << " .";
+					os << piece_t::getNullShortString();
 				}
 				else {
-					if (pieceEntry->val.position != pos) os << '?';
-					else os << ' ';
 					os << static_cast<piece_t>(pieceEntry->val);
 				}
 			}
