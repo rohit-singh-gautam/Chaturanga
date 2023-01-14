@@ -251,8 +251,10 @@ namespace rohit {
 		// Only reason this can fail is no history present
 		if (!undoChalNoValidation()) return false;
 
+#ifdef DEBUG
 		bool validMove = findValidMoves();
 		assert(validMove);
+#endif
 
 		return true;
 	}

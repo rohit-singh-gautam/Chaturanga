@@ -9,12 +9,13 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/chaturanga",
-            "args": ["--player1", "3", "--player2", "3"],
+            "args": ["--player1", "4", "--player2", "4"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
+            "visualizerFile": "${workspaceFolder}/NatvisFile.natvis",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

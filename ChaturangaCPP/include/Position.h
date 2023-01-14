@@ -58,11 +58,11 @@ namespace rohit {
 		static const Position Captured;
 
 	private:
-		struct posvalue_type {
-			row_t row : 4;
-			col_t col : 4;
+		struct [[gnu::packed]] posvalue_type {
+			row_t row;
+			col_t col;
 		};
-		union {
+		union [[gnu::packed]] {
 			posvalue_type posvalue;
 			position_storage_type value;
 		};
@@ -76,7 +76,7 @@ namespace rohit {
 
 		// inline Position(const Position &pos) : row(pos.row), col(pos.col) {} // This is not required.
 
-		constexpr bool verify() const { return (value & ~0x77) == 0; }
+		constexpr bool verify() const { return (value & ~0x0707) == 0; }
 
 		constexpr bool operator==(const Position& pos) const { return value == pos.value; }
 		constexpr bool operator!=(const Position& pos) const { return value != pos.value; }

@@ -85,8 +85,7 @@ void TestAshtapada(const niti_depth_type maxdepth, const niti_depth_type player1
 	while (pAshtapada->isCheckmate() == player_t::none && pAshtapada->getMoveCount() < Ashtapada::max_chal - maxdepth) {
 		int playerid = pAshtapada->getCurrentPlayer();
 		const Chal chal = nitiAyog.getNextMove(depth[playerid]);
-		bool moved = pAshtapada->applyChal(chal.from, chal.to);
-		assert(moved);
+		pAshtapada->applyChal(chal.from, chal.to);
 		std::cout << *pAshtapada;
 		std::cout << "stat:: " << nitiAyog.getStat() << std::endl;
 		std::cout << "-------------------------------" << std::endl << std::endl;

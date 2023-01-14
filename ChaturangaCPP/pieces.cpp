@@ -80,7 +80,7 @@ namespace rohit {
 	{
 		for (row_t row = row_t::row_rstart; row != row_t::row_rend; row--) {
 			for (col_t col = 0_col; col <= col_t::col_last; col++) {
-				const Position pos(row, col);
+				const Position pos { row, col };
 				const Pieces::_Entry *pieceEntry = pieces[pos];
 				if (pieceEntry == nullptr) {
 					os << " .";
