@@ -22,7 +22,7 @@ public:
 private:
     ashtapada_entry board[boardsize] { };
 
-    size_t get_index(const row_type row, const column_type column) { return row*8 + column; }
+    constexpr size_t get_index(const row_type row, const column_type column) { return row*8 + column; }
 
 public:
     constexpr ashtapada() { }

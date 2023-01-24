@@ -5,6 +5,7 @@
 #include <ashtapada.h>
 
 int main(int const argc, char const * const * const argv) {
+    std::cout << "board_entry size: " << sizeof(rohit::board_entry) << std::endl;
     bool display_version { false };
     bool player1auto { false };
     bool player2auto { false };
