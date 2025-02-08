@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-vla)
-
 project(chaturanga VERSION 1.0)
 
 include_directories(chaturanga
@@ -16,6 +14,8 @@ add_executable(chaturanga
 	include/ReleaseCheck.h include/storage.h
 )
 
+add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-vla)
+
 configure_file(include/version.h.in include/version.h)
 
-target_compile_features(chaturanga PRIVATE cxx_std_23)
+target_compile_features(chaturanga PRIVATE cxx_std_20)
