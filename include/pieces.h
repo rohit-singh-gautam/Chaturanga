@@ -201,6 +201,7 @@ namespace rohit {
 			"Unknown"
 		};
 
+#ifdef __linux__
 		static constexpr std::string_view shortString[] {
 			"\033[0;0m\xF0\x9F\x91\xB3\033[0m",
 			"\033[0;7m\xF0\x9F\x91\xB3\033[0m",
@@ -217,6 +218,11 @@ namespace rohit {
 			"\033[0;0m\xE2\xAC\x9C\033[0m",
 			"??"
 		};
+#else
+		static constexpr std::string_view shortString[] {
+			"R", "r", "S", "s", "C", "c", "G", "g", "A", "a", "P", "p", " ", "??"
+		};
+#endif
 
 	public:
 		constexpr piece_t() : value(Empty) {}

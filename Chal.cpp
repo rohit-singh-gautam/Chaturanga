@@ -2,6 +2,8 @@
 
 namespace rohit {
 
+	const Position Position::Captured { row_t::row_unknown, col_t::col_unknown };
+
 	const PadatiPromotion PadatiPromotion::None = { player_t::unknown, col_t::col_unknown };
 
 	// Add padati is being promoted

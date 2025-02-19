@@ -92,8 +92,6 @@ namespace rohit {
 
 	};
 
-	constexpr const Position Position::Captured { row_t::row_unknown, col_t::col_unknown };
-
 	class DiffPosition {
 		row_t row;
 		col_t col;

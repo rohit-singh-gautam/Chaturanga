@@ -137,7 +137,7 @@ bool commandline::parser(const int argc, char const * const * const argv) {
 //      <Parameters>
 //
 const std::string commandline::usage() const {
-    std::string usage_line { std::string{"Usage: "} + std::string { name.filename() } + " "};
+    std::string usage_line { std::string{"Usage: "} + std::string { name.filename().string() } + " "};
     for (auto option: options) {
         usage_line += option.get_short_description();
     }

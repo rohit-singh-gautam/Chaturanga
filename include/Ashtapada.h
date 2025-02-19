@@ -98,7 +98,7 @@ namespace rohit {
 		display_flag_type display_flag = display_board | display_history | display_piecelist | display_captured | display_summary;
 	};
 
-	std::ostream & operator<<(std::ostream & os, const Ashtapada &ashtapada);
+	std::ostream& operator<<(std::ostream& os, const Ashtapada &ashtapada);
 	std::ostream& operator<<(std::ostream& os, const MohraChal::StoreType &moves);
 	std::ostream& operator<<(std::ostream& os, const Ashtapada::HistoryType &moves);
 

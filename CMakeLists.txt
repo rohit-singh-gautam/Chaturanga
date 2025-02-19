@@ -14,7 +14,11 @@ add_executable(chaturanga
 	include/ReleaseCheck.h include/storage.h
 )
 
-add_compile_options(-Wall -Wextra -pedantic -Werror -Wno-vla)
+if (UNIX)
+add_compile_options(-Wall -Werror -Wpedantic -Wextra -Weffc++ -Wsuggest-override) # -fanalyzer
+elseif (MSVC)
+add_compile_options(/W4 /WX)
+endif()
 
 configure_file(include/version.h.in include/version.h)
 

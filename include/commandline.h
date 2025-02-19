@@ -139,7 +139,7 @@ public:
 
     const std::string usage() const;
     const std::string get_name() const {
-        return name.filename();
+        return name.filename().string();
     }
 
 };
