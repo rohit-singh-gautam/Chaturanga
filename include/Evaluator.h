@@ -7,7 +7,7 @@ namespace rohit {
 	class Evaluator
 	{
 	public:
-		static constexpr board_score_type mohraScores[] { 0, 0, -20, 20, -80, 80, -30, 30, -40, 40, -11, 11, 0, 0 };
+		static constexpr board_score_type mohraScores[] { 0, 0, -20, 20, -11, 11, -80, 80, -16, 16, -30, 30, 8, 8 };
 		static constexpr board_score_type checkScore[] { 10, -10, 0 };
 		static constexpr board_score_type checkmateScore[] { 12345, -12345, 0 };
 		static constexpr board_score_type lowest_score[] { 12345, -12345 };
